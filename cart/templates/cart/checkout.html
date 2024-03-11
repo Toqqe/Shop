@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+{% load static %}
+{% load shop_extras %}
+
+{% block page_title %}Checkout{% endblock  %}
+
+{% block page_css_files %}
+<link rel="stylesheet" href="{% static "cart/css/checkout.css" %}">
+{% endblock  %}
+
+{% block page_content %}
+{% include "header.html" %}
+
+<div class="container mt-2 p-0">
+    
+    <div class="row px-md-4 mx-1 pt-4">
+        
+            <div class="col-lg-8">
+                <h4 class="mb-3">Order</h4>
+                <div class="card mb-2" >
+                    <div class="table-responsive px-md-3 px-1 pt-2">
+                        <table class="table table-borderless">
+                            <tbody>
+                            {% for products in user_prod %}
+                                <tr class="border-bottom" data-item-id="{{products.id}}">
+
+                                    <td class="align-middle">
+                                        <div class="d-flex align-items-center">
+                                            <div class="p-1">
+                                                <img class="cart-modal-img" widht="80" height="80" src="{{products.product.image.url}}">
+                                            </div>
+                                            <div class="ps-3 d-flex flex-column justify-content">
+                                                <p class="fw-bold mb-0">{{products.product.name}}</p> 
+                                                <small class="d-flex"> 
+                                                    <span class="text-muted">Category: </span> 
+                                                    <span class="fw-bold">{{products.product.category}}</span> 
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </td> 
+
+                                    <td class="align-middle">
+                                        <div class="d-flex">
+                                                <svg class="bi my-auto" width="1em" height="1em"><use xlink:href="#dollar"/></svg>
+                                                <span class="text-muted d-flex">
+                                                    {{products.product.price}}</span>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <input type="number" id="input-quantity" class="form-control form-control-sm m-5" min="1" max="10" onchange="updateCart(this)" data-item-id="{{products.id}}"value="{{products.quantity}}" placeholder="{{products.quantity}}">
+                                    </td>
+                                    <td class="align-middle">
+                                        <div class="d-flex">
+                                            <svg class="bi my-auto" width="1em" height="1em"><use xlink:href="#dollar"/></svg>
+                                            <span class="price-item-{{products.id}} d-flex">
+                                                {{ products.quantity | multiply:products.product.price  }}
+                                            </span> 
+                                        </div>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <button class="btn" id="remove-from-cart" tooltip="Remove Item" data-value="1" onclick="removeFromCart(this)" data-item-id="{{products.id}}">
+                                            <svg class="bi" width="24" height="24"><use xlink:href="#x"/></svg>
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                            <div class="text-center">
+                                <h5>Add something to cart!</h5>
+                            </div>
+                            {% endfor %}
+                            </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-lg-4">
+                    <h4 class="mb-3">Summary</h4>
+                    <div class="card px-md-3 px-2 pt-4">
+                        <div class="d-flex justify-content-between py-1"> <small class="text-muted">Account: </small>
+                            <p>{{curr_user}}</p>
+                        </div>
+                        <div class="d-flex justify-content-between py-1"> <small class="text-muted">Order ID: </small>
+                            <p>12312312321</p>
+                        </div>
+                        <div class="d-flex bd-highlight" id="price-block"> 
+                            <small class="text-muted me-auto bd-highlight">Order Summary</small>
+                            {% if code %}
+                            <div class="d-flex" id="discount-elements">
+                                <svg class="bi bd-highlight my-1" width="1em" height="1em"><use xlink:href="#dollar"/></svg>
+                                <p class="price bd-higdhlight text-decoration-line-through text-muted pe-2" id="order-price">{{total_price}}</p>
+                                <svg class="bi bd-highlight my-1" width="1em" height="1em"><use xlink:href="#dollar"/></svg>
+                                <p class="bd-highlight" id="order-price-disc">{{total_price_disc}}</p>
+                            </div>
+                            {% else %}
+                            <div class="d-flex" id="price-elements">
+                                <svg class="bi bd-highlight my-1" width="1em" height="1em"><use xlink:href="#dollar"/></svg>
+                                <p class="bd-highlight" id="order-price">{{total_price}}</p>
+                            </div>
+                             {% endif %}
+                        </div>
+                    </div>
+                    <div id="response-container"></div>
+                    <div class="d-flex justify-content-between mt-1 "> 
+                        {% if code.code == None %}
+                        <input type="text" class="ps-2" id="coupon-input" placeholder="Enter code">
+                        <button class="btn btn-dark" disabled id="coupon-btn">Apply</button>
+                        {% else %}
+                        <input class="code-apply" type="text" class="ps-2" id="coupon-input" placeholder="Active: %{{code.discout}} - {{code.code}}">
+                            <svg class="bi my-auto me-auto" id="remove-coupon" width="24" height="24" type="button"><use xlink:href="#x"/></svg>
+                        <button class="btn btn-primary" disabled id="coupon-btn">Apply</button>
+                        {% endif %}
+                    </div>
+                    
+                    <h4 class="mb-3 mt-5">Delivery</h4>
+                    
+                    <div class="card px-md-3 px-2 pt-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label" for="exampleRadios1">
+                            Default radio
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                            <label class="form-check-label" for="exampleRadios2">
+                            Second default radio
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
+                            <label class="form-check-label" for="exampleRadios3">
+                            Disabled radio
+                            </label>
+                        </div>
+                    </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-between mt-5">
+            <div class="p-2 bd-highlight">
+            </div>
+            <div class="p-2 bd-highlight">
+                <a class="btn btn-black me-md-2" href="{% url "home" %}" type="button">
+                    <svg class="bi bd-highlight my-1" width="2em" height="2em" type="button"><use xlink:href="#home"/></svg>
+                </a>
+            </div>
+            <div class="p-2 bd-highlight">
+                {% if user_prod %}
+                <a class="btn btn-black me-md-2" href="{% url "checkout-1" %}" type="button">
+                    <svg class="bi bd-highlight my-1" width="2em" height="2em" type="button"><use xlink:href="#arrow-right"/></svg>
+                </a>
+                {% endif %}
+            </div>
+        </div>
+</div>
+
+
+<script src={% static "coupons/js/coupon.js" %}></script>
+<script src={% static "coupons/js/remove-coupon.js" %}></script>
+
+
+
+{% endblock  %}
+

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}Log in{% endblock %}
+
+{% block page_css_files %}
+<link rel="stylesheet" href="{% static "accounts/css/login.css" %}">
+<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+{% endblock  %}
+
+
+{% block page_content %}
+
+<body class="text-center">
+    <main class="form-signin">
+        <form method="POST">
+            {% csrf_token %}
+            <img class="mb-4" src="{% static "accounts/bootstrap-logo.svg" %}" alt="" width="72" height="57">
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+            {{ form.username.error }} 
+            
+            <div class="form-floating">
+                {{form.username}}
+                {{form.username.error}}
+                <label for="floatingInput">Username</label>
+            </div>
+            <div class="form-floating">
+                {{form.password}}
+                {{form.password.error}}
+                <label for="floatingInput">Password</label>
+            </div> 
+
+            <div class="col">
+                <!-- Simple link -->
+                <br>
+                Don't have account yet? <a class="ml-2" href="{% url 'register-page' %}">Sign In</a>
+                <br><br>
+                {% comment %} <a href="{% url 'password_reset' %}">Forgot password?</a> {% endcomment %}
+            </div>
+
+            <button class="w-100 btn btn-lg btn-primary" type="subdmit">Sign in</button>
+            <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+        </form>
+    </main>
+  </body>
+
+
+{% endblock  %}

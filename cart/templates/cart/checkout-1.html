@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load shop_extras %}
+{% block page_title %}Checkout{% endblock  %}
+{% block page_css_files %}
+
+<style>
+  .form-check-input:checked {
+    background-color: #000;
+    border-color: #000;
+}
+</style>
+
+{% endblock  %}
+
+
+{% block page_content %}
+
+{% include "header.html" %}
+
+    <div class="container">
+      <main>
+        <div class="py-5 text-center">
+          <h2>Summary and payment</h2>
+        </div>
+    
+        <div class="row g-5">
+          
+          <div class="col-md-5 col-lg-4 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+              <span class="text">Your cart</span>
+              <span class="badge bg-dark rounded-pill">3</span>
+            </h4>
+            <ul class="list-group mb-3">
+                
+            {% for item in cart.items.all %}
+              <li class="list-group-item d-flex justify-content-between lh-sm">
+                <div>
+                  <h6 class="my-0">{{item.product.name}}</h6>
+                  <small class="text-muted">Quantity - {{item.quantity}}</small>
+                </div>
+                <span class="text-muted">${{ item.quantity | multiply:item.product.price  }}</span>
+              </li>
+            {% endfor %}
+              {% if code %}
+              <li class="list-group-item d-flex justify-content-between bg-light">
+                <div class="text-success">
+                  <h6 class="my-0">Promo code</h6>
+                  <small>{{code}}</small>
+                </div>
+                <span class="text-success">${{savings}}</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Total</span>
+                <strong>${{total_price_disc}}</strong>
+              </li>
+              {% else %}
+              <li class="list-group-item d-flex justify-content-between">
+                <span>Total</span>
+                <strong>${{total_price}}</strong>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+          <div class="col-md-7 col-lg-8">
+                <div class="row g-3">
+                      <div class="col">
+                          <h4 class="mb-3 d-flex">Billing Address
+                            <svg class="bi " width="24" height="24" data-bs-toggle="tooltip" data-bs-title="Billing address, same as home address" title"xD">
+                              <use xlink:href="#info"/>
+                            </svg>
+                          </h4>
+                          <div class="card p-2" >
+                              <small>Name: {{user_profile.first_name}} {{user_profile.last_name}}</small>
+                              <small>Address: {{address.address}}</small>
+                              <small>Country: {{address.country}}</small>
+                              <small>State: {{address.state}}</small>
+                              <small>Postal Code: {{address.postal_code}}</small>
+                              <a class="btn" href="{% url "account" %}">
+                                <svg class="bi" width="16" height="16"><use xlink:href="#pencil"/></svg>
+                              </a>
+                          </div>
+                      </div>
+                      <div class="col">
+                          <h4 class="mb-3">Delivery address</h4>
+                          <div class="card p-2" >
+                              <small>Name: {{user_profile.first_name}} {{user_profile.last_name}}</small>
+                              <small>Address: {{delivery.address}}</small>
+                              <small>Country: {{delivery.country}}</small>
+                              <small>State: {{delivery.state}}</small>
+                              <small>Postal Code: {{delivery.postal_code}}</small>
+                              <a class="btn" href="{% url "account" %}">
+                                <svg class="bi" width="16" height="16"><use xlink:href="#pencil"/></svg>
+                              </a>
+                          </div>
+                      </div>
+                </div>
+                <hr class="my-4">
+                <h4 class="mb-3 mt-5">Payment</h4>
+                <div class="my-3">
+                  <div class="form-check">
+                    <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required checked>
+                    <label class="form-check-label" for="paypal">PayPal</label>
+                  </div>
+                </div>
+                <div class="row gy-3">
+                    <div class="col-md-6">
+                      <label for="cc-name" class="form-label">Email</label>
+                      <input type="text" class="form-control" id="cc-name" placeholder="" required>
+                      <small class="text-muted">Email to make payment with paypal</small>
+                      <div class="invalid-feedback">
+                        Name on card is required
+                      </div>
+                    </div>
+
+                </div>
+          </div>
+        </div>
+          <!-- Submit buttons -->
+          <form method="POST" action="{% url "confirm-order" %}">
+            {% csrf_token %}
+            <div class="w-100 text-center mt-5">
+              <button class="btn btn-dark btn-lg mt-3 w-50" type="submit">Submit</button>
+            </div>
+          </form>
+          <!-- Border buttons -->
+          <div class="d-flex justify-content-between mt-5">
+            <div class="p-2 bd-highlight">
+              <a class="btn btn-black me-md-2" href="{% url "checkout" %}" type="button">
+                <svg class="bi bd-highlight my-1" width="2em" height="2em" type="button"><use xlink:href="#left-right"/></svg>
+              </a>
+            </div>
+            <div class="p-2 bd-highlight">
+                <a class="btn btn-black me-md-2" href="{% url "home" %}" type="button">
+                    <svg class="bi bd-highlight my-1" width="2em" height="2em" type="button"><use xlink:href="#home"/></svg>
+                </a>
+            </div>
+            <div class="p-2 bd-highlight">
+                <a class="btn btn-black me-md-2" href="{% url "checkout-1" %}" type="button">
+                    <svg class="bi bd-highlight my-1" width="2em" height="2em" type="button"><use xlink:href="#arrow-right"/></svg>
+                </a>
+            </div>
+          </div>
+      </main>
+    
+    </div>
+    
+    <script>
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    </script>
+
+{% endblock  %}

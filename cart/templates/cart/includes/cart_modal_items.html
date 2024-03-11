@@ -1,0 +1,63 @@
+{% load shop_extras %}
+{% load static %}
+
+  <div class="table-responsive-xl">
+  <table class="table table-hover">
+     {{ user_prod|json_script:"cart-items" }}
+      <thead>
+          <tr class="text-center"> 
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col">Product</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Total</th>
+            <th scope="col">Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          {%for item in cart.items.all%}
+            <tr class="text-center" data-item-id="{{item.id}}">
+                <th scope="row"class="align-middle">{{ forloop.counter }}</th>
+                <td class="align-middle">
+                  <img class="cart-modal-img" widht="50" height="50" src="{{item.product.image.url}}">
+                </td>
+                <td class="align-middle">{{item.product.name}}</td>
+                <td class="align-middle text-center">
+                  <div class="d-flex justify-content-center">
+                    <svg class="bi my-auto" width="1em" height="1em"><use xlink:href="#dollar"/></svg>
+                    <span class="text-muted">
+                      {{item.product.price}}
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  <input type="number" id="input-quantity" class="form-control form-control-sm mt-2 mx-auto" min="1" max="10" onchange="updateCart(this)" data-item-id="{{item.id}}"value="{{item.quantity}}" placeholder="{{item.quantity}}">
+                </td>
+                <td class="align-middle">
+                  <div class="d-flex justify-content-center">
+                    <svg class="bi my-auto" width="1em" height="1em"><use xlink:href="#dollar"/></svg>
+                    <span class="price-item-{{item.id}}">{{ item.quantity | multiply:item.product.price  }}</span>
+                  </div>
+                </td>
+                <td class="align-middle text-center">
+                  <button class="btn" id="remove-from-cart" tooltip="Remove Item" data-value="1" onclick="removeFromCart(this)" data-item-id="{{item.id}}">
+                    <svg class="bi" width="24" height="24"><use xlink:href="#x"/></svg>
+                  </button>
+                </td>
+                {% empty %}
+                <tr>
+                  <h2 class="text-center tx-bold mx-auto">Add something to cart!:)</h2>
+                </tr>
+            </tr>
+          {% endfor %}
+      </tbody>
+  </table> 
+</div>
+<div class="d-flex justify-content-end">
+    <h5>Total: 
+      <svg class="bi mb-1" width="1em" height="1em"><use xlink:href="#dollar"/></svg>
+
+      <span class="price text-success">{{total_price|floatformat:2}}</span>
+    </h5>
+</div>

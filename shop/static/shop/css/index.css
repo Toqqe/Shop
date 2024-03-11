@@ -1,0 +1,65 @@
+.bi{
+    fill: currentColor;
+}
+
+.text-white{
+    color:rgb(0, 0, 0) !important;
+}
+
+
+.carousel-item {
+    transition: transform 1.0s ease-in-out;
+}
+
+.modal.fade .modal-dialog {
+    transition: transform 0.5s ease-out;
+  }
+
+.card {
+    background: center no-repeat;
+    background-size: cover;
+}
+
+
+ .part-1 ul{
+    opacity: 0;
+    transform: translateY(100%);
+    transition: transform 0.5s, opacity 0.5s;
+}
+.card:hover .part-1 ul{
+    transform: translateY(0);
+    opacity: 1;
+} 
+/* Carousel base class */
+.carousel {
+    margin-bottom: 4rem;
+    
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+
+    bottom: 3rem;
+    z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel-item {
+    height: 42rem;
+}
+.carousel-item > img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    height: 42rem;
+}
+.carousel-inner > .item > img {
+    width:640px;
+    height:360px;
+  }
+
+
+.img-thumbnail{
+    width: 60%;
+}
+

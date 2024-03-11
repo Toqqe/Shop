@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_title %}Orders{% endblock  %}
+
+{% block page_css_files %}
+<link rel="stylesheet" href="{% static "accounts/css/account.css" %}">
+
+{% endblock  %}
+
+
+{% block page_content %}
+    {% include "header.html" %}
+
+    <div class="text-center">
+        <button class="navbar-toggler position-absodlute d-md-none collapsed bg-black mx-auto mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            
+            <div class="col-lg-1 col-md-3 col-sm-6">
+                {% include "accounts/includes/sidebar.html" %}
+            </div>
+
+            <div class="col-lg-11 col-md-8 col-sm-6">
+                <table class="table table-borderless table-hover align-middle mb-0 bg-white mt-0">
+                    <thead class="text-center bg-light">
+                      <tr>
+                        <th>ID</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Payment</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody class="text-center">
+                        {% for order in user_orders %}
+                        <tr class="border-bottom">
+                            <td>
+                                <div class="ms-3">
+                                    <p class="fw-bold mb-1">{{order.id}}</p>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="fw-normal mb-1">${{order.sum}}</p>
+                            </td>
+                            <td>
+                                {% if order.status == 1 %}
+                                <span class="badge bg-primary">{{order.get_status_display }}</span>
+                                {% elif order.status == 2 %}
+                                <div>
+                                    <span class="badge bg-warning text-dark">{{order.get_status_display }}</span>
+                                </div>
+                                <div>
+                                    <span class="badge bg-warning text-dark" >Click to make payment</span>
+                                </div>
+                                {% elif order.status == 3 %}
+                                <span class="badge bg-info text-dark">{{order.get_status_display }}</span>
+                                {% elif order.status == 4 %}
+                                <span class="badge bg-light text-dark">{{order.get_status_display }}</span>
+                                {% elif order.status == 5 %}
+                                <span class="badge bg-success">{{order.get_status_display }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <p class="text-muted mb-0">{{order.date_ordered | date:"F d o" }}</p>
+                            </td>
+                            <td>
+                                <p class="text-muted mb-0">{{order.get_payment_display }}</p>
+                            </td>
+                            <td>
+                                <p class="text-muted mb-0">X</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                  </table>
+            </div>
+            
+        </div>
+    </div>
+
+{% endblock %}

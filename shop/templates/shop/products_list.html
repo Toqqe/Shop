@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block page_title %}Products{% endblock  %}
+{% block page_css_files %}
+<link rel="stylesheet" href={% static "shop/css/products-list.css" %}>
+<link rel="stylesheet" href={% static "shop/css/cart.css" %}>
+
+{% endblock  %}
+
+{% block page_content %}
+
+{% include "header.html" %}
+
+{% comment %} <div class="container">
+    <div class="row">
+
+        <div class="col-lg-2" style="height: 100vh;">
+            One of three columns
+        </div>
+
+        {% for products in list_products %}
+            <div class="col col-lg-3">
+                
+                    <div id="product" class="single-product">
+                        <div class="part-1">
+                            <ul class="list-group">
+                                <li><a href="#"><i class="fas fa-shopping-cart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fas fa-plus"></i></a></li>
+                                <li><a href="#"><i class="fas fa-expand"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="part-2">
+                            <h3 class="product-title">Here Product Title</h3>
+                            <h4 class="product-old-price">$79.99</h4>
+                            <h4 class="product-price">$49.99</h4>
+                        </div>
+                    </div>
+            </div>
+        {% endfor %}
+
+        
+    </div>
+</div> {% endcomment %}
+
+{{ curr_category.name|json_script:"curr-category" }}
+
+<div class="container">
+    <div class="border-bottom mb-2">
+        <h2 class="title text-center">Shop</h2>
+    </div>
+    <div class="row">
+        <div class="category col-sm-2" style="height: 30vh;">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a class="text-decoration-none" href="{% url "products-page" %}">Reset</a></li>
+                {% for category in categories %}
+                    <li class="list-group-item"><a class="text-decoration-none" id="category-tag" data-value="{{category.name}}" href="{% url "filter-product-page" category %}">{{category.name}}</a> | {{category.product_set.all.count}}</li>
+                {% endfor %}
+              </ul>
+        </div>
+        
+        <div class="col-lg-10 mx-auto">
+            <div class="d-flex flex-row-reverse w-100 p-3">
+                <select class="form-select align-end" id="form-select">
+                    <option selected value="0">Default</option>
+                    <option value="1">Lowest Price</option>
+                    <option value="2">Highest Price</option>
+                </select>
+            </div>
+            <div class="row g-4" id="products">
+                {% include "shop/includes/product_list_items.html" %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock  %}

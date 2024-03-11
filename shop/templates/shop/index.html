@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+{% block page_title %}Shop{% endblock  %}
+{% block page_css_files %}
+<link rel="stylesheet" href={% static "shop/css/index.css" %}>
+<link rel="stylesheet" href={% static "shop/css/cart.css" %}>
+{% endblock  %}
+
+{% block page_content %}
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="table" viewBox="0 0 16 16">
+      <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z"/>
+    </symbol>
+</svg>
+  
+
+{% include "header.html" %}
+
+<main>
+
+  {% comment %} <div class="container-fluid">
+      <img class="rounded mx-auto d-block" width="50%" height="50%" src="/media/main-image.jpg" loading="lazy" />
+  </div>  {% endcomment %}
+  
+      <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="" src="/media/main-image.jpg" loading="lazy" />
+          <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+          <div class="container">
+            <div class="carousel-caption mt-5">
+              <h1>Example headline.</h1>
+              <p>Some representative placeholder content for the first slide of the carousel.</p>
+              <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>Another example headline.</h1>
+              <p>Some representative placeholder content for the second slide of the carousel.</p>
+              <p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="carousel-item">
+          <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
+          <div class="container">
+            <div class="carousel-caption">
+              <h1>One more for good measure.</h1>
+              <p>Some representative placeholder content for the third slide of this carousel.</p>
+              <p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>  
+
+    <div class="container px-4 py-5" id="custom-cards">
+      <h2 class="pb-2 text-center border-bottom">Products</h2>
+  
+      <div class="row row-cols-1 row-cols-lg-3 g-4 py-5">
+
+        {% for product in last_products %}
+        <div class="col">
+          <div class="card card-cover h-100 overflow-hidden text-dark rounded-5 shadow-lg p-2 " style="background-image: url('{{product.image.url}}');">
+            <div class="d-flex flex-column h-100 text-dark text-shadow-1">
+              <h2 class="mb-5 my-3 display-8 lh-1 fw-bold">{{product.name}}</h2>
+              <div class="part-1">
+                <ul class="d-flex list-unstyled mt-5 pt-5">
+                  <li class="d-flex align-items-center me-auto">
+                      <span class="badge bg-white text-dark border">
+                        <small class="fw-bold">{{product.price}}</small>
+                        <svg class="bi" width="1em" height="1em"><use xlink:href="#dollar"/></svg>
+                      </span>
+                  </li>
+                  <li class="d-flex align-items-center ">
+                    <button type="button" class="btn btn-light border" id="add-to-cart" data-product-id="{{product.id}}">
+                      <svg class="bi" width="1rem" height="1rem"><use xlink:href="#basket"/></svg>
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+  </div>
+</main>
+<script src={% static "shop/js/add-to-cart.js" %}></script>
+
+{% endblock  %}

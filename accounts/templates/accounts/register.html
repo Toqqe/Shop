@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block page_title %}Register{% endblock  %}
+
+{% block page_css_files %}
+<link rel="stylesheet" href="{% static "accounts/css/login.css" %}">
+{% endblock  %}
+
+{% block page_content %}
+
+<body class="text-center">
+  <main class="form-signin">
+      <form method="POST">
+          {% csrf_token %}
+          <img class="mb-4" src="{% static "accounts/bootstrap-logo.svg" %}" alt="" width="72" height="57">
+          <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+          
+          {% for field in form %}
+            <div class="form-floating{% if field.errors %} invalid {% endif %}">
+              {{ field }}
+              {{ field.label_tag }}
+              {{ field.errors }}
+            </div>
+          {% endfor %}
+
+          <div class="col">
+              <!-- Simple link -->
+              <br>
+              Have account? <a class="ml-2" href="{% url 'login-page' %}">Log In</a>
+              <br><br>
+              {% comment %} <a href="{% url 'password_reset' %}">Forgot password?</a> {% endcomment %}
+          </div>
+
+          <button class="w-100 btn btn-lg btn-primary" type="subdmit">Sign in</button>
+          <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+      </form>
+  </main>
+</body>
+
+{% endblock  %}

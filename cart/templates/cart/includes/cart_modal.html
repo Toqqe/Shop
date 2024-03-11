@@ -1,0 +1,28 @@
+  <!-- Modal -->
+
+  <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="cartModalLabel">Cart</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="cartModalPlaceholder">
+        </div>
+
+        <div class="modal-footer border-top-0 d-flex justify-content-between">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close">Close</button>
+
+            <button class="btn btn-danger" id="remove-from-cart" tooltip="Remove all" data-value="2" onclick="removeFromCart(this)">
+              <svg class="bi" width="1em" height="1em"><use xlink:href="#trash"/></svg>
+            </button>
+            <a type="button" class="btn btn-primary" href="{% url "checkout" %}">Checkout</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  

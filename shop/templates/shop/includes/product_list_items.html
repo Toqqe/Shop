@@ -1,0 +1,38 @@
+{% load static %}
+
+{% for product in list_products %}
+<div class="col-5">
+    <div class="card card-cover overflow-hidden text-dark rounded-5 shadow-sm p-2" id="{{product.id}}" style="background-image: url('{{product.image.url}}');">
+
+            <div class="d-flex flex-column h-100 text-dark text-shadow-1">
+            <h2 class="mb-5 my-3 display-8 lh-1 fw-bold">{{product.name}}</h2>
+                <div class="part-1">
+                    <ul class="d-flex list-unstyled mt-5 pt-5">
+                        <li class="d-flex align-items-center me-auto">
+                            <span class="badge bg-white text-dark border">
+                                <span class="fw-bold">{{product.price}}</span>
+                                <svg class="bi" width="1em" height="1em"><use xlink:href="#dollar"/></svg>
+                            </span>
+                        </li>
+                        <li class="d-flex align-items-center ">
+                            <button type="button" class="btn btn-white border">
+                                <svg class="bi" width="1em" height="1em"><use xlink:href="#heart"/></svg>
+                            </button>
+                        </li>
+                        <li class="d-flex align-items-center mx-1" >
+                            <button type="button" class="btn btn-white border" id="add-to-cart" data-product-id="{{product.id}}">
+                                <svg class="bi" width="1em" height="1em"><use xlink:href="#basket"/></svg>
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    </div>
+</div>
+{% empty %}
+<h2 class="text-center">No products matching!</h2>
+{% endfor %}
+
+<script src={% static "shop/js/add-to-cart.js" %}></script>
+<script src={% static "shop/js/filter-products.js" %}></script>
+<script src={% static "shop/js/sort-products.js" %}></script>
