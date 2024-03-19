@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block page_css_files %}
+
+{% endblock  %}
+
+{% block page_title %}{{product.name}}{% endblock  %}
+
+{% block page_content %}
+
+
+    <div class="text-center mb-5">
+        <div class="row">
+            <div class="col">
+                <div class="bg-body-tertiary me-md-2 text-center overflow-hidden">
+                    <div class="my-3 p-3">
+                        <h2 class="display-5">{{product.name}}</h2>
+                        <p class="lead">And an even wittier subheading.</p>
+                    </div>
+                    <div class="bg-body shadow mx-auto" style="width: 80%; border-radius: 21px 21px 0 0;">
+                        <img src="{{product.image.url}}" class="img-fluid" alt="...">
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="bg-body-tertiary me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center overflow-hidden">
+                    <div class="my-3 py-3">
+                        <h2 class="display-5">Another headline</h2>
+                        <p class="lead">And an even wittier subheading.</p>
+                    </div>
+                    <div class="bg-body shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock  %}

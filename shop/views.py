@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.views import View
+from django.shortcuts import get_object_or_404
 
 from shop.models import Product, Category
 
@@ -45,7 +46,7 @@ def sortProducts(ordby_value, category=None):
 class ProductsView(View):
     def get(self, request, category=None):
         curr_user = request.user
-        products = Product.objects.all()
+        products = Product.objects.all().order_by('-id')
         categories = Category.objects.all()
         choosed_category = ""
 
@@ -92,3 +93,13 @@ class ProductsView(View):
         #         "categories": categories,
         #     }
         #     return render(request, products_template_name, context)
+    
+def product_detail_view(request, slug):
+
+    product = get_object_or_404(Product, slug=slug)
+
+
+    context = {
+        "product":product
+    }
+    return render(request, "shop/product_view.html", context)

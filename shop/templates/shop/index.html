@@ -15,8 +15,6 @@
 </svg>
   
 
-{% include "header.html" %}
-
 <main>
 
   {% comment %} <div class="container-fluid">
@@ -81,6 +79,8 @@
         {% for product in last_products %}
         <div class="col">
           <div class="card card-cover h-100 overflow-hidden text-dark rounded-5 shadow-lg p-2 " style="background-image: url('{{product.image.url}}');">
+            <a href="{% url "products-detail" product.slug %}" class="text-decoration-none">
+
             <div class="d-flex flex-column h-100 text-dark text-shadow-1">
               <h2 class="mb-5 my-3 display-8 lh-1 fw-bold">{{product.name}}</h2>
               <div class="part-1">
@@ -99,12 +99,15 @@
                 </ul>
               </div>
             </div>
+            </a>
           </div>
         </div>
         {% endfor %}
       </div>
   </div>
 </main>
+
+
 <script src={% static "shop/js/add-to-cart.js" %}></script>
 
 {% endblock  %}

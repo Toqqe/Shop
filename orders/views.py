@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.views.decorators.http import require_http_methods
 
 # Create your views here.
 
@@ -14,7 +15,7 @@ def get_orders(request):
     }
     return render(request, "accounts/orders.html", context)
 
-
+@require_http_methods(["POST"])
 def confirm_order(request):
     if request.method == "POST":
         curr_user_profile = request.user.profile

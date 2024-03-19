@@ -2,8 +2,9 @@
 
 {% for product in list_products %}
 <div class="col-5">
+    
     <div class="card card-cover overflow-hidden text-dark rounded-5 shadow-sm p-2" id="{{product.id}}" style="background-image: url('{{product.image.url}}');">
-
+    <a href="{% url "products-detail" product.slug %}" class="text-decoration-none">
             <div class="d-flex flex-column h-100 text-dark text-shadow-1">
             <h2 class="mb-5 my-3 display-8 lh-1 fw-bold">{{product.name}}</h2>
                 <div class="part-1">
@@ -27,6 +28,7 @@
                     </ul>
                 </div>
             </div>
+    </a>
     </div>
 </div>
 {% empty %}

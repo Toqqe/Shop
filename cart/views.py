@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
 
 import json
 
@@ -26,6 +27,7 @@ def cart_modal(request):
 
     return render(request, modal_template_name, context)
 
+@require_http_methods(["POST"])
 def add_to_cart(request):
     if request.method == "POST":
 
@@ -50,8 +52,8 @@ def add_to_cart(request):
         else:
             return redirect("home")
 
+@require_http_methods(["POST"])
 def remove_from_cart(request):
-
     if request.method == "POST":
         curr_user = request.user
 
@@ -83,6 +85,7 @@ def remove_from_cart(request):
         else:
             return redirect("home")
 
+@require_http_methods(["POST"])
 def reset_cart(request):
 
     if request.method == "POST":
@@ -99,6 +102,7 @@ def reset_cart(request):
         else:
             return redirect("home")
 
+@require_http_methods(["POST"])
 def update_cart(request):
     """
     id - CartItem ID
@@ -154,13 +158,12 @@ def checkout(request):
 
     return render(request, 'cart/checkout.html', context)
 
-
+##@require_http_methods(["POST"])
 def checkout_summary(request):
     code_id = request.session.get('coupon_id')
     user_profile = request.user.profile
 
     address = Address.objects.filter(profile=user_profile, type=1).first() ## Billing
-   
     delivery = Address.objects.filter(profile=user_profile, type=2).first() ## Delivery
 
     cart_obj = Cart.objects.get(user=request.user)

@@ -3,11 +3,13 @@ import json
 from django.shortcuts import render
 from django.utils import timezone
 from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
 
 from coupons.models import Coupon
 from cart.models import Cart
 # Create your views here.
 
+@require_http_methods(["POST"])
 def apply(request):
     now = timezone.now()
     data = json.loads(request.body)
@@ -45,7 +47,8 @@ def apply(request):
             "status":401,
             "message": "Invalid",
         })
-
+    
+@require_http_methods(["POST"])
 def remove(request):
     user_cart = Cart.objects.get(user=request.user)
     old_price = sum(item.quantity * item.product.price for item in user_cart.items.all())
