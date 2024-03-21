@@ -39,12 +39,14 @@ def add_to_cart(request):
         if curr_user.is_authenticated:
             cart, created = Cart.objects.get_or_create(user=curr_user)
             cart_item, item_created = CartItem.objects.get_or_create(user=curr_user, product=product)
+            print(cart_item)
+            print(item_created)
             cart.items.add(cart_item) ## Add exception if quanitity > 10 return error (10 max value of items) 
-
             if not item_created:
                 if not (cart_item.quantity == 10):
                     cart_item.quantity += 1
                     cart_item.save()
+                    
             return JsonResponse({
                 "status":200,
                 "message":"Item added"

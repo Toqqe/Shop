@@ -2,7 +2,7 @@
 {% load static %}
 
   <div class="table-responsive-xl">
-  <table class="table table-hover">
+  <table class="table table-hover table-borderless">
      {{ user_prod|json_script:"cart-items" }}
       <thead>
           <tr class="text-center"> 
@@ -17,7 +17,7 @@
       </thead>
       <tbody>
           {%for item in cart.items.all%}
-            <tr class="text-center" data-item-id="{{item.id}}">
+            <tr class="text-center border-bottom" data-item-id="{{item.id}}">
                 <th scope="row"class="align-middle">{{ forloop.counter }}</th>
                 <td class="align-middle">
                   <img class="cart-modal-img" widht="50" height="50" src="{{item.product.image.url}}">

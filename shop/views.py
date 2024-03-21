@@ -52,7 +52,7 @@ class ProductsView(View):
 
         if category:
             choosed_category = Category.objects.get(name=category)
-            products = Product.objects.filter(category=choosed_category)
+            products = Product.objects.filter(category=choosed_category).order_by('-id')
             
         ordby_value = request.GET.get('ordby', None)
         if ordby_value:

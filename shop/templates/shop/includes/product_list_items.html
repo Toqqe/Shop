@@ -1,14 +1,16 @@
 {% load static %}
 
 {% for product in list_products %}
-<div class="col-5">
-    
-    <div class="card card-cover overflow-hidden text-dark rounded-5 shadow-sm p-2" id="{{product.id}}" style="background-image: url('{{product.image.url}}');">
-    <a href="{% url "products-detail" product.slug %}" class="text-decoration-none">
+
+<div class="col-6 col-lg-5">
+    <div class="card card-cover overflow-hidden text-dark rounded-5 shadow-sm p-2" id="{{product.id}}" >
+        <a href="{% url "products-detail" product.slug %}" class="text-decoration-none">
+            <img src="{{product.image.url}}" class="card-img-top" alt="...">
+        </a>
             <div class="d-flex flex-column h-100 text-dark text-shadow-1">
-            <h2 class="mb-5 my-3 display-8 lh-1 fw-bold">{{product.name}}</h2>
+            <h5 class="text-center lh-0 text-muted">{{product.name}}</h5>
                 <div class="part-1">
-                    <ul class="d-flex list-unstyled mt-5 pt-5">
+                    <ul class="d-flex list-unstyled">
                         <li class="d-flex align-items-center me-auto">
                             <span class="badge bg-white text-dark border">
                                 <span class="fw-bold">{{product.price}}</span>
@@ -28,7 +30,6 @@
                     </ul>
                 </div>
             </div>
-    </a>
     </div>
 </div>
 {% empty %}

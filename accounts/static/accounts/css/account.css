@@ -38,9 +38,9 @@
     color: #727272;
   }
   
-  .sidebar .nav-link.active {
+  /* .sidebar .nav-link.active {
     color: #2470dc;
-  }
+  } */
   
   .sidebar .nav-link:hover .feather,
   .sidebar .nav-link.active .feather {
@@ -50,7 +50,15 @@
   tr.border-bottom:last-child {
     border-bottom: none !important;
 }
-
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+  background-color: #727272;
+}
   /*
    * Navbar
    */
+.form-control {
+    border: 0; 
+    
+    border-width: 30%;
+    border-bottom: solid 1px #333;
+}

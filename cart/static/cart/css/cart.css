@@ -21,3 +21,11 @@
 .form-control{
     width: 3rem;
 }
+
+tbody>tr{
+    border-bottom: solid 1px black;
+}
+
+tr.border-bottom:last-child {
+    border-bottom: none !important;
+}
