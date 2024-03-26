@@ -5,7 +5,11 @@
 <div class="col-6 col-lg-5">
     <div class="card card-cover overflow-hidden text-dark rounded-5 shadow-sm p-2" id="{{product.id}}" >
         <a href="{% url "products-detail" product.slug %}" class="text-decoration-none">
-            <img src="{{product.image.url}}" class="card-img-top" alt="...">
+            {% for image in product.image.all %}
+                {% if forloop.last %}
+                    <img src="{{image.image.url}}" class="card-img-top" alt="...">
+                {% endif %}
+            {% endfor %}
         </a>
             <div class="d-flex flex-column h-100 text-dark text-shadow-1">
             <h5 class="text-center lh-0 text-muted">{{product.name}}</h5>

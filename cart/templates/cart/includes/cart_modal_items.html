@@ -2,6 +2,9 @@
 {% load static %}
 
   <div class="table-responsive-xl">
+  {% if not cart.items.all %}
+  <h2 class="text-center tx-bold mx-auto">Add something to cart!:)</h2>
+  {% else %}
   <table class="table table-hover table-borderless">
      {{ user_prod|json_script:"cart-items" }}
       <thead>
@@ -45,14 +48,11 @@
                     <svg class="bi" width="24" height="24"><use xlink:href="#x"/></svg>
                   </button>
                 </td>
-                {% empty %}
-                <tr>
-                  <h2 class="text-center tx-bold mx-auto">Add something to cart!:)</h2>
-                </tr>
             </tr>
           {% endfor %}
       </tbody>
   </table> 
+  {% endif %}
 </div>
 <div class="d-flex justify-content-end">
     <h5>Total: 

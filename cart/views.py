@@ -39,9 +39,8 @@ def add_to_cart(request):
         if curr_user.is_authenticated:
             cart, created = Cart.objects.get_or_create(user=curr_user)
             cart_item, item_created = CartItem.objects.get_or_create(user=curr_user, product=product)
-            print(cart_item)
-            print(item_created)
             cart.items.add(cart_item) ## Add exception if quanitity > 10 return error (10 max value of items) 
+
             if not item_created:
                 if not (cart_item.quantity == 10):
                     cart_item.quantity += 1
@@ -49,7 +48,8 @@ def add_to_cart(request):
                     
             return JsonResponse({
                 "status":200,
-                "message":"Item added"
+                "message":"Item added",
+                "cart_items" : cart.items.count()
             })
         else:
             return redirect("home")
@@ -83,6 +83,7 @@ def remove_from_cart(request):
                 "message":"Item removed",
                 "new_total_price": new_total_price,
                 "new_total_price_disc": new_total_price_disc,
+                "cart_items" : cart.items.count(),
             })
         else:
             return redirect("home")
@@ -100,6 +101,7 @@ def reset_cart(request):
             return JsonResponse({
                 "status":200,
                 "message":"Items removed",
+                "cart_items" : cart.items.count(),
             })
         else:
             return redirect("home")

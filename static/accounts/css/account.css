@@ -1,0 +1,64 @@
+  
+  /*
+   * Sidebar
+   */
+  
+  .sidebar {
+    width: 10%;
+    background-color: #f4f4f4;
+    height: 100vh; /* Ustawia wysokość na całą wysokość okna przeglądarki */
+    position: fixed; /* Ustawia element na stałej pozycji na ekranie */
+    z-index: 125;
+    left: 0; /* Umieszcza sidebar na lewej stronie okna przeglądarki */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+  }
+  
+  @media (max-width: 767.98px) {
+     .sidebar {
+      width: 100%;
+    } 
+  }
+  
+  .sidebar-sticky {
+    position: relative;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+  }
+  
+  .sidebar .nav-link {
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .sidebar .nav-link .feather {
+    margin-right: 4px;
+    color: #727272;
+  }
+  
+  /* .sidebar .nav-link.active {
+    color: #2470dc;
+  } */
+  
+  .sidebar .nav-link:hover .feather,
+  .sidebar .nav-link.active .feather {
+    color: inherit;
+  }
+  
+  tr.border-bottom:last-child {
+    border-bottom: none !important;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+  background-color: #727272;
+}
+  /*
+   * Navbar
+   */
+.form-control {
+    border: 0; 
+    
+    border-width: 30%;
+    border-bottom: solid 1px #333;
+}

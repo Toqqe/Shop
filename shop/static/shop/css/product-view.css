@@ -1,0 +1,38 @@
+.thumbnail{
+    width: 5em;
+}
+
+
+.carousel-indicators button.thumbnail {
+    width: 100px;
+  }
+.carousel-indicators button.thumbnail:not(.active) {
+opacity: 0.7;
+}
+.carousel-indicators {
+position: static;
+}
+@media screen and (min-width: 992px) {
+.carousel {
+    max-width: 70%;
+    margin: 0 auto;
+}
+}
+.carousel-item{
+    height: 500px; /* Ustaw wysokość na odpowiednią wartość */
+    overflow: hidden; /* Ukryj treść, która wykracza poza div */
+    background-color: #ffffff; /* Dodaj białe tło */
+    text-align: center;
+    
+}
+
+
+
+.carousel-item img {
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-50%);
+    width: 100%; /* Ustaw szerokość zdjęcia na 100% */
+    height: auto; /* Zachowaj proporcje obrazka */
+
+}

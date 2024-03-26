@@ -1,15 +1,17 @@
 shop_project/.env
 .vscode/g
+.env
+.htaccess
 __pycache__
 db.sqlite3
-
-accounts/__pycache__/
-accounts/migrations/
-cart/__pycache__/
-cart/migrations/
-coupons/__pycache__/
-coupons/migrations/
-orders/__pycache__/
-orders/migrations/
-shop/__pycache__/
-shop/migrations/
+migrations
+# accounts/__pycache__/
+# accounts/migrations/
+# cart/__pycache__/
+# cart/migrations/
+# coupons/__pycache__/
+# coupons/migrations/
+# orders/__pycache__/
+# orders/migrations/
+# shop/__pycache__/
+# shop/migrations/

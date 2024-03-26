@@ -1,0 +1,33 @@
+.form-control{
+    width: 3rem;
+}
+
+tr.border-bottom:last-child {
+    border-bottom: none !important;
+}
+
+
+.table-responsive {
+    max-height:45rem;
+}
+
+#coupon-input{
+
+    border-radius: 1rem;
+}
+
+.code-apply{
+    border-color: #39f121c2;
+}
+
+
+
+#order-price-disc{
+    color:red;
+}
+
+
+.form-check-input:checked {
+    background-color: #000;
+    border-color: #000;
+}

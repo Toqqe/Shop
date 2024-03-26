@@ -1,7 +1,7 @@
 {% extends "base.html" %}
-
+{% load static %}
 {% block page_css_files %}
-
+<link rel="stylesheet" href={% static "shop/css/product-view.css" %}>
 {% endblock  %}
 
 {% block page_title %}{{product.name}}{% endblock  %}
@@ -11,13 +11,42 @@
 <div class="container">
     <div class="mb-5 py-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-6 p-5 pe-0">
+            <div class="col-md-6 col-sm-6 pe-0">
                 <div class="bg-body shadow mx-auto" style="width: 80%; border-radius: 21px 21px 0 0;">
-                    <img src="{{product.image.url}}" class="img-fluid" alt="...">
+                    
+
+
+                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                        {% for image in product.image.all reversed %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}" style="position: relative;">
+                                <img src="{{image.image.url}}" class="d-block w-100 mx-auto align-middle" alt="...">
+                            </div>
+                        {% endfor %}
+                        </div>
+
+                        <div class="carousel-indicators">
+                            {% for image in product.image.all reversed %}
+                                {% if product.image.all|length > 1 %}
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{forloop.counter0}}" class="{% if forloop.first %}active {% else %}{% endif %} thumbnail" aria-current="true" aria-label="Slide {{forloop.counter}}">
+                                    <img src="{{image.thumbnail.url}}" class="thumbnail d-block w-100" alt="...">
+                                </button>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        
+                      </div>
                 </div>
+                
+                {% comment %} <div class="d-flex mt-1 justify-content-center">
+                {% for image in product.image.all reversed %}
+                    <img src="{{image.thumbnail.url}}" class="thumbnail mx-1" alt="...">
+                {% endfor %}
+                </div> {% endcomment %}
             </div>
-            <div class="col-md-6 p-5 ps-0">
-                <div class="bg-light-subtle me-md-2 overflow-hidden rounded">
+
+            <div class="col-md-6 col-sm-3 p-5 ps-0">
+                <div class="bg-light-subtle me-md-2 p-5 overflow-hidden rounded">
                     <div class="small mb-1">SKU: {{product.id}}</div>
                     <h2 class="display-5 fw-bolder">{{product.name}}</h2>
                     <div class="fs-5 mb-5">
@@ -26,15 +55,20 @@
                     <p class="lead">Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium at dolorem quidem modi. Nam sequi consequatur obcaecati excepturi alias magni, accusamus eius blanditiis delectus ipsam minima ea iste laborum vero?</p>
                 </div>
                 <div class="d-flex">
+                    <div class="d-flex mx-auto">
                     <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-                    <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                    <button class="btn btn-outline-dark flex-shrink-0 " type="button">
                         <svg class="bi" width="24" height="24"><use xlink:href="#cart"/></svg>
                         Add to cart
                     </button>
+                    </div>
                 </div>
             </div>
         </div>
+
     </div>
 </div>
+
+
 
 {% endblock  %}

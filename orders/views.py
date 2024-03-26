@@ -9,7 +9,7 @@ from cart.models import CartItem, Cart
 def get_orders(request):
     curr_user_profile = request.user.profile
     user_orders = Order.objects.filter(user=curr_user_profile)
-
+    print(user_orders)
     context={
         "user_orders":user_orders
     }
