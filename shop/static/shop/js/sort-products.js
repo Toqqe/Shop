@@ -6,10 +6,10 @@ const productClass = document.getElementById('products')
 selectElement.addEventListener("change", ()=> {
 
     let selectedValue = selectElement.value;
-    let selectedText = selectElement.options[selectElement.selectedIndex].text;
+
     let url;
     if(category != ""){
-        url = `/products/${category}/?ordby=${selectedValue}`
+        url = `/products/filter=${category}/?ordby=${selectedValue}`
     }
     else{
         url = `/products/?ordby=${selectedValue}`

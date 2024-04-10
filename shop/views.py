@@ -10,7 +10,7 @@ from shop.models import Product, Category
 def index(request):
     curr_user = request.user
     products = Product.objects.all().order_by('-id')[:3]
-
+    categories = Category.objects.all()
     """
     - produkty na głównej
     - slider,
@@ -19,7 +19,8 @@ def index(request):
     """
     context = {
         "curr_user" : curr_user,
-        "last_products": products
+        "last_products": products,
+        "categories": categories,
     }
     return render(request, "shop/index.html", context)
 
@@ -45,6 +46,7 @@ def sortProducts(ordby_value, category=None):
 
 class ProductsView(View):
     def get(self, request, category=None):
+
         curr_user = request.user
         products = Product.objects.all().order_by('-id')
         categories = Category.objects.all()
@@ -55,6 +57,7 @@ class ProductsView(View):
             products = Product.objects.filter(category=choosed_category).order_by('-id')
             
         ordby_value = request.GET.get('ordby', None)
+
         if ordby_value:
             if ordby_value == "1":
                 products = products.order_by('-price')
@@ -97,9 +100,11 @@ class ProductsView(View):
 def product_detail_view(request, slug):
 
     product = get_object_or_404(Product, slug=slug)
+    other_products = Product.objects.all().filter(category=product.category).exclude(id=product.id) ## Same cat
 
 
     context = {
-        "product":product
+        "product":product,
+        "other_products":other_products
     }
     return render(request, "shop/product_view.html", context)

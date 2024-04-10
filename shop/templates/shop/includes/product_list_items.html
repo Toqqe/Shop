@@ -1,45 +1,88 @@
 {% load static %}
+<div class="row mb-5">
+    {% for product in list_products %}
+    <div class="col-6 col-lg-5 m-2">
 
-{% for product in list_products %}
-
-<div class="col-6 col-lg-5">
-    <div class="card card-cover overflow-hidden text-dark rounded-5 shadow-sm p-2" id="{{product.id}}" >
-        <a href="{% url "products-detail" product.slug %}" class="text-decoration-none">
-            {% for image in product.image.all %}
-                {% if forloop.last %}
-                    <img src="{{image.image.url}}" class="card-img-top" alt="...">
-                {% endif %}
-            {% endfor %}
-        </a>
-            <div class="d-flex flex-column h-100 text-dark text-shadow-1">
-            <h5 class="text-center lh-0 text-muted">{{product.name}}</h5>
-                <div class="part-1">
-                    <ul class="d-flex list-unstyled">
-                        <li class="d-flex align-items-center me-auto">
-                            <span class="badge bg-white text-dark border">
-                                <span class="fw-bold">{{product.price}}</span>
-                                <svg class="bi" width="1em" height="1em"><use xlink:href="#dollar"/></svg>
-                            </span>
-                        </li>
-                        <li class="d-flex align-items-center ">
-                            <button type="button" class="btn btn-white border">
-                                <svg class="bi" width="1em" height="1em"><use xlink:href="#heart"/></svg>
-                            </button>
-                        </li>
-                        <li class="d-flex align-items-center mx-1" >
-                            <button type="button" class="btn btn-white border" id="add-to-cart" data-product-id="{{product.id}}">
-                                <svg class="bi" width="1em" height="1em"><use xlink:href="#basket"/></svg>
-                            </button>
-                        </li>
-                    </ul>
+        <div class="card border-0 card-cover overflow-hidden text-dark rounded-2 shadow-sm p-2" id="{{product.id}}" >
+            <a href="{% url "product-detail" product.slug %}" class="text-decoration-none">
+                {% for image in product.image.all %}
+                    {% if forloop.last %}
+                        <img src="{{image.image.url}}" class="card-img-top object-fit-scale" alt="...">
+                    {% endif %}
+                {% endfor %}
+            </a>
+                <div class="d-flex flex-column h-100 text-dark text-shadow-1">
+                    <h5 class="text-center lh-0 text-muted">{{product.name}}</h5>
+                    <div class="part-1">
+                        <ul class="d-flex list-unstyled">
+                            <li class="d-flex align-items-center me-auto">
+                                <span class="badge bg-white text-dark border">
+                                    <span class="fw-bold">{{product.price}}</span>
+                                    <svg class="bi" width="1em" height="1em"><use xlink:href="#dollar"/></svg>
+                                </span>
+                            </li>
+                            <li class="d-flex align-items-center ">
+                                <button type="button" class="btn btn-white border">
+                                    <svg class="bi" width="1em" height="1em"><use xlink:href="#heart"/></svg>
+                                </button>
+                            </li>
+                            <li class="d-flex align-items-center mx-1" >
+                                <button type="button" class="btn btn-white border" id="add-to-cart" data-product-id="{{product.id}}">
+                                    <svg class="bi" width="1em" height="1em"><use xlink:href="#basket"/></svg>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-    </div>
-</div>
-{% empty %}
-<h2 class="text-center">No products matching!</h2>
-{% endfor %}
+        </div>
 
+    </div>
+    {% empty %}
+    <h2 class="text-center">No products matching!</h2>
+    {% endfor %}
+
+
+    {% comment %} {% for product in list_products %}
+    <div class="col-6 col-lg-5 m-2">
+        <div class="card card-cover overflow-hidden text-dark rounded-5 shadow-sm p-2" id="{{product.id}}" >
+            <a href="{% url "product-detail" product.slug %}" class="text-decoration-none">
+                {% for image in product.image.all %}
+                    {% if forloop.last %}
+                        <img src="{{image.image.url}}" class="card-img-top object-fit-scale" alt="...">
+                    {% endif %}
+                {% endfor %}
+            </a>
+                <div class="d-flex flex-column h-100 text-dark text-shadow-1">
+                <h5 class="text-center lh-0 text-muted">{{product.name}}</h5>
+                    <div class="part-1">
+                        <ul class="d-flex list-unstyled">
+                            <li class="d-flex align-items-center me-auto">
+                                <span class="badge bg-white text-dark border">
+                                    <span class="fw-bold">{{product.price}}</span>
+                                    <svg class="bi" width="1em" height="1em"><use xlink:href="#dollar"/></svg>
+                                </span>
+                            </li>
+                            <li class="d-flex align-items-center ">
+                                <button type="button" class="btn btn-white border">
+                                    <svg class="bi" width="1em" height="1em"><use xlink:href="#heart"/></svg>
+                                </button>
+                            </li>
+                            <li class="d-flex align-items-center mx-1" >
+                                <button type="button" class="btn btn-white border" id="add-to-cart" data-product-id="{{product.id}}">
+                                    <svg class="bi" width="1em" height="1em"><use xlink:href="#basket"/></svg>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+        </div>
+    </div>
+    {% empty %}
+    <h2 class="text-center">No products matching!</h2>
+    {% endfor %} {% endcomment %}
+
+
+</div>
 <script src={% static "shop/js/add-to-cart.js" %}></script>
 <script src={% static "shop/js/filter-products.js" %}></script>
 <script src={% static "shop/js/sort-products.js" %}></script>

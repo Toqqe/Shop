@@ -36,6 +36,13 @@ class Images(models.Model):
             thumbnail.save(thumbnail_io, format='JPEG', quality=85)
             self.thumbnail.save(self.image.name, InMemoryUploadedFile(
                 thumbnail_io, None, self.image.name, 'image/jpeg', sys.getsizeof(thumbnail_io), None))
+            
+    def thumb_preview(self): #new
+        first_thumb = self.thumbnail
+        if first_thumb:
+            return mark_safe(f'<img src="{first_thumb.url}" width="100"/>')
+        else:
+            return 'No thumbnail'
 
 
 class Product(models.Model):
